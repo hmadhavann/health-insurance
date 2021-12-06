@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang= "en">
+<!--
+    Author: Hima Madhavan
+-->
+<head>
+    <meta charset="UTF-8">
+    <title>Health Insurance Risk Calculator </title>
+    <link rel="stylesheet" href="health-insurance-risk.css">  
+</head>
+
+<body style="background-color: aliceblue;"></body>
+<body>
+    <h1> Health Insurance Risk Calculator </h1>
+    <p> <i>This is a Health Insurance Calculator, simply answer all questions honestly, and we will help you understand where you 
+        fall in regards to your health insurance. Stay Healthy!</i>
+    </p>
+    <div class= "form-inline">
+
+    <label>What is your age currently?</label><br />
+    <select id="ageValue">
+        <option value="0"> Less than 30 </option>
+        <option value="10"> Between 30 and 45</option>
+        <option value="20">Between 45 and 60 </option>
+        <option value="30">Greater than 60</option>
+    </select>
+
+     <br /><br /><br />
+     <label>What is your height in Inches?</label>
+    <input type="number" id="h"><br><br>
+    <label>What is your weight in Pounds?</label>
+    <input type="number" id="w"><br><br>
+    <input type="button" value="Calculate BMI" onclick=calculateBMI()>
+    <p id="finalTotal"></p>
+
+    <label>Please select what category your BMI would fall under, based on the message above</label><br />
+    <select id="BMIvalue">
+        <option value="0">Normal</option>
+        <option value="35">Overweight</option>
+        <option value="75">Obese</option>
+    </select>
+    <br /><br /><br />
+
+    <p>Please Refer to the following Blood Pressure Chart to answer the following question </p>
+    <img src="bloodpressure.png" alt="bloodpressure-image" style="width:500px;height:300px" class="center">
+    <br />
+    <label>Based on the chart, where would your blood pressure range fall?</label><br />
+    <select id="BloodPressurevalue">
+        <option value="0">Normal</option>
+        <option value="15">Elevated</option>
+        <option value="30">Stage One</option>
+        <option value="75">Stage Two</option>
+        <option value="100">Crisis</option>
+    </select>
+
+    <br /><br /><br />
+    <label>Do You Have Family History of Alzhimers?</label><br />
+    <select id="alzhimersValue">
+        <option value="10">Yes</option>
+        <option value="0">No</option>
+    </select>
+
+    <br /><br /><br />   
+    <label>Do You Have Family History of Diabtes?</label><br />
+    <select id="diabetesValue">
+        <option value="10">Yes</option>
+        <option value="0">No</option>
+    </select>
+    <br /><br /><br />
+    
+    <label>Do You Have Family History of Cancer?</label><br />
+    <select id="cancerValue">
+        <option value="10">Yes</option>
+        <option value="0">No</option>
+    </select>
+    <br /><br /><br />
+
+    <button onclick= "calculateRisk()">Calculate Risk</button>
+    <p id="riskValue"></p>
+
+<script>
+    console.log("Starting Health Insurance Risk Calculator...");
+  
+    function calculateBMI() {   
+        var height = parseFloat(document.getElementById("h").value);
+        var weight = parseFloat(document.getElementById("w").value);
+        var bmi=[(weight/(height*height))* 703];
+        var userBMI= document.getElementById("BMI_index");
+        document.getElementById("finalTotal").innerHTML = "Your BMI is:  " + bmi;
+        bmi = Math.round(bmi*10)/10
+        
+
+        let BMImessage = " "
+        if (bmi < 24.9) {
+            BMImessage = "Normal"
+        } else if (bmi < 29.9) {
+            BMImessage = "Overweight"
+        } else {
+            BMImessage = "Obese"
+        }
+        console.log("Your BMI is: "  + bmi +   BMImessage)
+        document.getElementById("finalTotal").innerHTML = "Your BMI is:   "+  bmi   + "<br/> Based on the following number you are:   " 
+        + BMImessage;
+
+    }
+
+    function calculateRisk() {
+        console.log("calculating total risk...");
+        let ageResponseValue = parseInt(document.getElementById("ageValue").selectedOptions[0].value);
+        console.log("ageResponseValue = " + ageResponseValue)
+
+
+        let bmiResponseValue = parseInt(document.getElementById("BMIvalue").selectedOptions[0].value);
+        console.log("bmiResponseValue = " + bmiResponseValue)
+
+        let bloodpressureResponseValue = parseInt(document.getElementById("BloodPressurevalue").selectedOptions[0].value);
+        console.log("bloodpressureResponseValue = " + bloodpressureResponseValue)
+
+        let alzhimersResponseValue = parseInt(document.getElementById("alzhimersValue").selectedOptions[0].value);
+        console.log("alzhimersResponseValue = " + alzhimersResponseValue)
+
+        let diabetesResponseValue = parseInt(document.getElementById("diabetesValue").selectedOptions[0].value);
+        console.log("diabetesResponseValue = " + diabetesResponseValue)
+
+        let cancerResponseValue = parseInt(document.getElementById("cancerValue").selectedOptions[0].value);
+        console.log("cancerResponseValue = " + cancerResponseValue);
+
+        let totalRisk =  ageResponseValue + bmiResponseValue + bloodpressureResponseValue+ alzhimersResponseValue + diabetesResponseValue + cancerResponseValue;
+        console.log("total risk = " + totalRisk)
+
+        document.getElementById("riskValue").innerHTML = "YOUR TOTAL RISK:   " + totalRisk;
+        
+        let totalRiskMessage = " "
+        if (totalRisk <= 20) {
+            totalRiskMessage = "you are at a LOW RISK for health insurance"
+        } else if (totalRisk <= 50) {
+            totalRiskMessage = "you are at MODERATE RISK for health insurance"
+        } else if (totalRisk <= 75) {
+            totalRiskMessage = "you are at HIGH RISK for health insurance"
+        } else {
+            totalRiskMessage = "you are UNISURABLE"
+        }
+        console.log("total risk = " + totalRisk + "This means that   " + totalRiskMessage)
+
+        document.getElementById("riskValue").innerHTML = "YOUR TOTAL RISK:   " + totalRisk + "<br/> This means that   " + totalRiskMessage;
+        
+    }
+    
+</script>
+</body>
+</html>
